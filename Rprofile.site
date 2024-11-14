@@ -1,0 +1,49 @@
+# Rprofile.site - System-wide R profile settings for NeneMap
+
+# Set default CRAN mirror
+local({
+    r <- getOption("repos")
+    r["CRAN"] <- "https://cloud.r-project.org"
+    options(repos = r)
+})
+
+# Increase file upload size limit to 50MB
+options(shiny.maxRequestSize = 50*1024^2)
+
+# Set timezone to Hawaii
+Sys.setenv(TZ = "Pacific/Honolulu")
+
+# Set default encoding
+options(encoding = "UTF-8")
+
+# Increase memory limit for large datasets
+if(.Platform$OS.type == "windows") {
+    utils::memory.limit(size = 8000)
+}
+
+# Set maximum print length for data frames
+options(max.print = 1000)
+
+# Set stringsAsFactors to FALSE globally
+options(stringsAsFactors = FALSE)
+
+# Set width for output
+options(width = 80)
+
+# Optimize for ShinyProxy environment
+options(
+    shiny.port = 3838,
+    shiny.host = "0.0.0.0",
+    shiny.launch.browser = FALSE
+)
+
+# Set number of digits for numeric display
+options(digits = 7)
+
+# Warning handling
+options(warn = 1)  # Print warnings as they occur
+
+# Set locale for consistent date/time handling
+if (Sys.info()["sysname"] == "Linux") {
+    Sys.setlocale("LC_TIME", "en_US.UTF-8")
+}
